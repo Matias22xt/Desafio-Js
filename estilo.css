@@ -1,5 +1,5 @@
-.container-header{
-  background: rgb(235, 183, 15);
+.conteiner{
+  background: rgb(255, 171, 118);
 }
 
 
@@ -8,7 +8,7 @@
   border-radius: 50%;
   background: white;
   animation: ripple 15s infinite;
-  box-shadow: 0px 0px 1px 0px #eef117;
+  box-shadow: 0px 0px 1px 0px rgb(255, 171, 118);
 }
 
 .small{
@@ -77,4 +77,86 @@
   100%{
     transform: scale(0.8);
   }
+}
+
+.imgarcoiris{
+  width: 27px;
+}
+
+
+.conteiner-main{
+  font-family: Arial;
+  text-align: center;
+  padding-top: 50px;
+  display: grid;
+  grid-template-areas: 
+  "titulo titulo titulo"
+  "cardContainer cardContainer cardContainer"
+  "boton boton boton";
+
+    
+}
+
+.boton{
+  grid-area: boton;
+}
+
+.titulo{
+  grid-area: titulo;
+  font-family: 'Amatic SC', cursive;
+  font-family: 'Dancing Script', cursive;
+  font-size: 60px;
+
+
+
+}
+
+
+.cardContainer {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  grid-area: cardContainer;
+}
+
+.card {
+  background-color: black;
+  width: 25%;
+  padding: 20px 10px;
+  border: 1px ;
+  border-radius: 20px;
+  
+  
+}
+
+
+.cardImg {
+  width: 80%;
+ }
+.imgCard{
+  text-align: center;
+  }
+
+.cardPrecio {
+  display: block;
+  font-size: 30px;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.buttonCTA {
+  margin: 10px 0;
+  background-color: rgb(186, 255, 180);
+  color: black;
+  font-size: 20px;
+  font-weight: 500;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.buttonCTA:hover {
+  background-color: rgb(119, 217, 112);
+  box-shadow: 1px 1px 10px lightgrey;
 }

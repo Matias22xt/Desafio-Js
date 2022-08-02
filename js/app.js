@@ -23,7 +23,7 @@ for (let i = 001; i <= 005; i++) {
          return numero1 + numero2
      }
     
-     {  let numero1 = 1150;
+     {  let numero1 = 3500;
         let numero2 = 170;
         let resultado = sumar(numero1, numero2);
          alert("Valor producto (Incluye IVA) $" + (resultado));
