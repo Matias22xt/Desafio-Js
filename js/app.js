@@ -14,7 +14,7 @@ class Adorno {
     }
 }
 
-const adorno1 = new Adorno(50, 'Arco Iris', ['10cm', '15cm', '20cm', '23cm'], ['amarillo', 'verde', 'azul','multicolor'], 3500)
+const adorno1 = new Adorno(50, 'Arco Iris', ['10cm x 15cm', '12cm x 18cm'], ['amarillo', 'verde', 'azul','multicolor'], 3500)
 const adorno2 = new Adorno(55, 'Espejos', ['35cm','40cm'], ['marrón', 'beige'], 5500)
 const adorno3 = new Adorno(60, 'Llaveros', ['10cm','15cm'], ['amarillo', 'verde','gris'], 2500)
 
