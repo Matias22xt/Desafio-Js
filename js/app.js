@@ -1,5 +1,97 @@
-// ARRAYS-MÉTODOS
 
+
+//array vacio (carrito)
+let carrito = []
+
+// productos
+class Adorno {
+    constructor(id, modelo, tamaños, colores, precio) {
+        this.id = id
+        this.modelo = modelo
+        this.tamaños = tamaños
+        this.colores = colores
+        this.precio = precio
+    }
+}
+
+const adorno1 = new Adorno(50, 'Arco Iris', ['10cm', '15cm', '20cm', '23cm'], ['amarillo', 'verde', 'azul','multicolor'], 3500)
+const adorno2 = new Adorno(55, 'Espejos', ['35cm','40cm'], ['marrón', 'beige'], 5500)
+const adorno3 = new Adorno(60, 'Llaveros', ['10cm','15cm'], ['amarillo', 'verde','gris'], 2500)
+
+// todos mis productos
+const adorno = [adorno1, adorno2, adorno3]
+
+// caracteristicas para elección de productos
+const editarProductoSeleccionado = (adornoSeleccionado) => {
+    const productoElegido = {
+        id: adornoSeleccionado.id,
+        modelo: adornoSeleccionado.modelo,
+        tamaños: '0',
+        color: '',
+        cantidad: 1,
+        precio: adornoSeleccionado.precio,
+    }
+
+    productoElegido.tamaños = Number (prompt('Elija Tamaños, tenemos los siguientes en stock: ' + adornoSeleccionado.tamaños.join('-')))
+    productoElegido.color = prompt('Elija Color, tenemos los siguientes en stock: ' + adornoSeleccionado.colores.join('-')).toLowerCase()
+    productoElegido.cantidad = Number(prompt('Cuantas unidades quiere sumar al carrito?'))
+
+    return productoElegido
+}
+
+
+// Solicitarle al usuario que elija que producto quiere comprar
+const seleccionarProducto = () => {
+    const seleccionUsuario = prompt('Elegi el modelo de decoración que quieras comprar entre: Arco Iris, Espejos, Llaveros').toLowerCase()
+
+    switch (seleccionUsuario) {
+        case 'arco iris':
+            console.log('Elegiste Arco Iris')
+            carrito.push(editarProductoSeleccionado(adorno1))
+            break
+        case 'espejos':
+            console.log('Elegiste Espejos')
+            carrito.push(editarProductoSeleccionado(adorno2))
+            break
+        case 'llaveros':
+            console.log('Llaveros')
+            carrito.push(editarProductoSeleccionado(adorno3))
+            break
+        default:
+            console.log('Por favor, elegi un modelo correcto')
+            alert('Por favor, elegi un modelo correcto')
+            break
+    }
+
+    if (confirm('Desea agregar otro producto a su compra?')) {
+        seleccionarProducto()
+    }
+}
+
+
+// Suma total de mis productos
+const sumarTotalCarrito = () => {
+    let sumaTotalCarrito = 0
+    for (const producto of carrito) {
+        sumaTotalCarrito += producto.precio * producto.cantidad
+    }
+    return sumaTotalCarrito
+}
+
+
+// Ejecuciones
+seleccionarProducto()
+
+alert('Gracias por su compra, su total es de $' + sumarTotalCarrito())
+console.log('Gracias por su compra, su total es de $' + sumarTotalCarrito())
+
+
+
+
+
+
+// ARRAYS-MÉTODOS
+/*
  let productos = ["Arco Iris",
                   "Llaveros",
                     "Espejos",
@@ -41,7 +133,7 @@ for (let i = 001; i <= 005; i++) {
     else {alert ('No has introducido un valor válido de edad. ( '+edad+')');}
     }
     
-
+*/
     
 
     
