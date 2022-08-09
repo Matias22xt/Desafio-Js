@@ -120,11 +120,12 @@
 }
 
 .card {
-  background-color: black;
+  background-color: rgb(255, 253, 190);
   width: 25%;
   padding: 20px 10px;
   border: 1px ;
   border-radius: 20px;
+  
   
   
 }
@@ -132,6 +133,7 @@
 
 .cardImg {
   width: 80%;
+  
  }
 .imgCard{
   text-align: center;

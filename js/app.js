@@ -1,4 +1,58 @@
+class Adornos {
+        constructor(modelo, medidas, imgSrc, precio) {
+             this.modelo = modelo
+             this.medidas = medidas
+             this.imgSrc = imgSrc
+             this.precio = precio
+         }
+    }
+    
+     const adorno1 = new Adornos ('Arco Iris', `5 unidades-15cm x 10cm.`, 'src="./img/arcoiris.jpeg"' , 3500)
+     const adorno2 = new Adornos ('Espejos', `40cm x 40cm.`, 'src="./img/espejo.jpeg"', 5500)
+     const adorno3 = new Adornos ('Llaves', `5 unidades-15cm. `, 'src="./img/llavero.jpeg"', 2500)
+     const productos = [adorno1, adorno2, adorno3]
 
+     const cardContainerQuery = document.querySelector('#cardContainer')
+
+     productos.forEach ((producto) => {
+const cardProducto = document.createElement('div')
+cardProducto.innerHTML = 
+`<h3 class="cardTitulo"> ${producto.modelo} </h3>
+<img ${producto.imgSrc} class="cardImg">
+<p class="cardDescri"> ${producto.medidas}</p>
+<span class="cardPrecio"> $${producto.precio} </span>
+<button class="buttonCTA"> Agregar al Carrito </button>`
+
+cardProducto.className = 'card ' 
+cardContainerQuery.append(cardProducto)
+
+     })
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
 
 //array vacio (carrito)
 let carrito = []
@@ -86,7 +140,7 @@ alert('Gracias por su compra, su total es de $' + sumarTotalCarrito())
 console.log('Gracias por su compra, su total es de $' + sumarTotalCarrito())
 
 
-
+/*
 
 
 
