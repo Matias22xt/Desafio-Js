@@ -1,18 +1,21 @@
+//DOM
 class Adornos {
-        constructor(modelo, medidas, imgSrc, precio) {
+        constructor(modelo, medidas, imgSrc, precio,id) {
              this.modelo = modelo
              this.medidas = medidas
              this.imgSrc = imgSrc
              this.precio = precio
+             this.id = id
          }
     }
     
-     const adorno1 = new Adornos ('Arco Iris', `5 unidades-15cm x 10cm.`, 'src="./img/arcoiris.jpeg"' , 3500)
-     const adorno2 = new Adornos ('Espejos', `40cm x 40cm.`, 'src="./img/espejo.jpeg"', 5500)
-     const adorno3 = new Adornos ('Llaves', `5 unidades-15cm. `, 'src="./img/llavero.jpeg"', 2500)
+     const adorno1 = new Adornos ('Arco Iris', `5 unidades-15cm x 10cm.`, 'src="./img/arcoiris.jpeg"' , 3500,'Arco Iris')
+     const adorno2 = new Adornos ('Espejos', `40cm x 40cm.`, 'src="./img/espejo.jpeg"', 5500,'Espejos')
+     const adorno3 = new Adornos ('Llaveros', `5 unidades-15cm. `, 'src="./img/llavero.jpeg"', 2500,'Llaveros')
      const productos = [adorno1, adorno2, adorno3]
 
      const cardContainerQuery = document.querySelector('#cardContainer')
+const renderizarProductos = () => {
 
      productos.forEach ((producto) => {
 const cardProducto = document.createElement('div')
@@ -21,23 +24,49 @@ cardProducto.innerHTML =
 <img ${producto.imgSrc} class="cardImg">
 <p class="cardDescri"> ${producto.medidas}</p>
 <span class="cardPrecio"> $${producto.precio} </span>
-<button class="buttonCTA"> Agregar al Carrito </button>`
+<button class="agregarCarrito" ${producto.id}> Agregar al Carrito </button>`
 
 cardProducto.className = 'card ' 
 cardContainerQuery.append(cardProducto)
 
+
      })
+ }
+ 
+//EVENTOS
+
+const botonAdornos = document.querySelector('#botonAdornos')
+botonAdornos.addEventListener('click', renderizarProductos)
+
+
+let carrito = []
+
+const botonesAgregarCarrito = document.querySelectorAll('.agregarCarrito')
+
+const mostrarEvento = (datosDelEvento) => {
+    const producto = datosDelEvento.target.getAttribute('id')
+    carrito.push(producto)
+    console.log(carrito);
+}
+
+botonesAgregarCarrito.forEach((boton) => {
+    boton.addEventListener('click', mostrarEvento)
+})
 
 
 
+// BUSCADOR
 
+const searchBar = document.querySelector('#search')
 
+const search = () => {
+    const query = searchBar.value
+    const searchResult = productos.filter((producto) => producto.modelo.toLowerCase().includes(query))
+    console.log(searchResult);
+    // y si en ves de mostrarlo por consola imprimimos los productos dentro de searchResult??
+}
 
-
-
-
-
-
+searchBar.addEventListener('input', search)
 
 
 
