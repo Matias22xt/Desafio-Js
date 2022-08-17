@@ -1,57 +1,200 @@
-//DOM
-class Adornos {
-        constructor(modelo, medidas, imgSrc, precio,id) {
-             this.modelo = modelo
-             this.medidas = medidas
-             this.imgSrc = imgSrc
-             this.precio = precio
-             this.id = id
-         }
-    }
+const adornos  = [
+    {
+        id: 1,
+        nombre: 'Arco Iris',
+        precio: 3500,
+        imagen: './img/arcoiris.jpeg'
+    },
+    {
+        id: 2,
+        nombre: 'Espejos',
+        precio: 5500,
+        imagen: './img/espejo.jpeg'
+    },
+    {
+        id: 3,
+        nombre: 'Llaveros',
+        precio: 2500,
+        imagen: './img/llavero.jpeg'
+    },
     
-     const adorno1 = new Adornos ('Arco Iris', `5 unidades-15cm x 10cm.`, 'src="./img/arcoiris.jpeg"' , 3500,'Arco Iris')
-     const adorno2 = new Adornos ('Espejos', `40cm x 40cm.`, 'src="./img/espejo.jpeg"', 5500,'Espejos')
-     const adorno3 = new Adornos ('Llaveros', `5 unidades-15cm. `, 'src="./img/llavero.jpeg"', 2500,'Llaveros')
-     const productos = [adorno1, adorno2, adorno3]
 
-     const cardContainerQuery = document.querySelector('#cardContainer')
-const renderizarProductos = () => {
+];
 
-     productos.forEach ((producto) => {
-const cardProducto = document.createElement('div')
-cardProducto.innerHTML = 
-`<h3 class="cardTitulo"> ${producto.modelo} </h3>
-<img ${producto.imgSrc} class="cardImg">
-<p class="cardDescri"> ${producto.medidas}</p>
-<span class="cardPrecio"> $${producto.precio} </span>
-<button class="agregarCarrito" ${producto.id}> Agregar al Carrito </button>`
+let carrito = [];
+const divisa = '$';
+const DOMitems = document.querySelector('#items');
+const DOMcarrito = document.querySelector('#carrito');
+const DOMtotal = document.querySelector('#total');
+const DOMbotonVaciar = document.querySelector('#boton-vaciar');
+const miLocalStorage = window.localStorage;
 
-cardProducto.className = 'card ' 
-cardContainerQuery.append(cardProducto)
+// Funciones
 
-
-     })
- }
- 
-//EVENTOS
-
-const botonAdornos = document.querySelector('#botonAdornos')
-botonAdornos.addEventListener('click', renderizarProductos)
-
-
-let carrito = []
-
-const botonesAgregarCarrito = document.querySelectorAll('.agregarCarrito')
-
-const mostrarEvento = (datosDelEvento) => {
-    const producto = datosDelEvento.target.getAttribute('id')
-    carrito.push(producto)
-    console.log(carrito);
+/**
+* Dibuja todos los productos a partir de la base de datos. No confundir con el carrito
+*/
+function renderizarProductos() {
+    adornos.forEach((info) => {
+        // Estructura
+        const miNodo = document.createElement('div');
+        miNodo.classList.add('card', 'col-sm-4');
+        // Body
+        const miNodoCardBody = document.createElement('div');
+        miNodoCardBody.classList.add('card-body');
+        // Titulo
+        const miNodoTitle = document.createElement('h5');
+        miNodoTitle.classList.add('card-title');
+        miNodoTitle.textContent = info.nombre;
+        // Imagen
+        const miNodoImagen = document.createElement('img');
+        miNodoImagen.classList.add('img-fluid');
+        miNodoImagen.setAttribute('src', info.imagen);
+        // Precio
+        const miNodoPrecio = document.createElement('p');
+        miNodoPrecio.classList.add('card-text');
+        miNodoPrecio.textContent = `$${info.precio}`;
+        // Boton 
+        const miNodoBoton = document.createElement('button');
+        miNodoBoton.classList.add('btn', 'btn-primary');
+        miNodoBoton.textContent = 'Agregar al carrito';
+        miNodoBoton.setAttribute('marcador', info.id);
+        miNodoBoton.addEventListener('click', agregarProductoAlCarrito);
+        // Insertamos
+        miNodoCardBody.appendChild(miNodoImagen);
+        miNodoCardBody.appendChild(miNodoTitle);
+        miNodoCardBody.appendChild(miNodoPrecio);
+        miNodoCardBody.appendChild(miNodoBoton);
+        miNodo.appendChild(miNodoCardBody);
+        DOMitems.appendChild(miNodo);
+    });
 }
 
-botonesAgregarCarrito.forEach((boton) => {
-    boton.addEventListener('click', mostrarEvento)
-})
+/**
+* Evento para añadir un producto al carrito de la compra
+*/
+function agregarProductoAlCarrito(evento) {
+    // Anyadimos el Nodo a nuestro carrito
+    carrito.push(evento.target.getAttribute('marcador'))
+    // Actualizamos el carrito 
+    renderizarCarrito();
+    // Actualizamos el LocalStorage
+    guardarCarritoEnLocalStorage();
+}
+
+/**baseDeDatos
+* Dibuja todos los productos guardados en el carrito
+*/
+function renderizarCarrito() {
+    // Vaciamos todo el html
+    DOMcarrito.textContent = '';
+    // Quitamos los duplicados
+    const carritoSinDuplicados = [...new Set(carrito)];
+    // Generamos los Nodos a partir de carrito
+    carritoSinDuplicados.forEach((item) => {
+        // Obtenemos el item que necesitamos de la variable base de datos
+        const miItem = adornos.filter((itemBaseDatos) => {
+            // ¿Coincide las id? Solo puede existir un caso
+            return itemBaseDatos.id === parseInt(item);
+        });
+        // Cuenta el número de veces que se repite el producto
+        const numeroUnidadesItem = carrito.reduce((total, itemId) => {
+            // ¿Coincide las id? Incremento el contador, en caso contrario no mantengo
+            return itemId === item ? total += 1 : total;
+        }, 0);
+        // Creamos el nodo del item del carrito
+        const miNodo = document.createElement('li');
+        miNodo.classList.add('list-group-item', 'text-right', 'mx-2');
+        miNodo.textContent = `${numeroUnidadesItem} x ${miItem[0].nombre} - $${miItem[0].precio}`;
+        // Boton de borrar
+        const miBoton = document.createElement('button');
+        miBoton.classList.add('btn', 'btn-danger', 'mx-5');
+        miBoton.textContent = 'X';
+        miBoton.style.marginLeft = '1rem';
+        miBoton.dataset.item = item;
+        miBoton.addEventListener('click', borrarCarrito);
+        // Mezclamos nodos
+        miNodo.appendChild(miBoton);
+        DOMcarrito.appendChild(miNodo);
+    });
+    // Renderizamos el precio total en el HTML
+    DOMtotal.textContent = calcularTotal();
+}
+
+
+//Evento para borrar un elemento del carrito
+
+function borrarCarrito(evento) {
+    // Obtenemos el producto ID que hay en el boton pulsado
+    const id = evento.target.dataset.item;
+    // Borramos todos los productos
+    carrito = carrito.filter((carritoId) => {
+        return carritoId !== id;
+    });
+    // volvemos a renderizar
+    renderizarCarrito();
+    // Actualizamos el LocalStorage
+    guardarCarritoEnLocalStorage();
+
+}
+
+/**
+ * Calcula el precio total teniendo en cuenta los productos repetidos
+ */
+function calcularTotal() {
+    // Recorremos el array del carrito 
+    return carrito.reduce((total, item) => {
+        // De cada elemento obtenemos su precio
+        const miItem = adornos.filter((itemBaseDatos) => {
+            return itemBaseDatos.id === parseInt(item);
+        });
+        // Los sumamos al total
+        return total + miItem[0].precio;
+    }, 0).toFixed(2);
+}
+
+/**
+* Varia el carrito y vuelve a dibujarlo
+*/
+function vaciarCarrito() {
+    // Limpiamos los productos guardados
+    carrito = [];
+    // Renderizamos los cambios
+    renderizarCarrito();
+    // Borra LocalStorage
+    localStorage.clear();
+
+}
+
+function guardarCarritoEnLocalStorage () {
+    miLocalStorage.setItem('carrito', JSON.stringify(carrito));
+}
+
+function cargarCarritoDeLocalStorage () {
+    // ¿Existe un carrito previo guardado en LocalStorage?
+    if (miLocalStorage.getItem('carrito') !== null) {
+        // Carga la información
+        carrito = JSON.parse(miLocalStorage.getItem('carrito'));
+    }
+}
+
+// Eventos
+DOMbotonVaciar.addEventListener('click', vaciarCarrito);
+
+// Inicio
+cargarCarritoDeLocalStorage();
+renderizarProductos();
+renderizarCarrito();
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -68,161 +211,3 @@ const search = () => {
 
 searchBar.addEventListener('input', search)
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*
-
-//array vacio (carrito)
-let carrito = []
-
-// productos
-class Adorno {
-    constructor(id, modelo, tamaños, colores, precio) {
-        this.id = id
-        this.modelo = modelo
-        this.tamaños = tamaños
-        this.colores = colores
-        this.precio = precio
-    }
-}
-
-const adorno1 = new Adorno(50, 'Arco Iris', ['10cm x 15cm', '12cm x 18cm'], ['amarillo', 'verde', 'azul','multicolor'], 3500)
-const adorno2 = new Adorno(55, 'Espejos', ['35cm','40cm'], ['marrón', 'beige'], 5500)
-const adorno3 = new Adorno(60, 'Llaveros', ['10cm','15cm'], ['amarillo', 'verde','gris'], 2500)
-
-// todos mis productos
-const adorno = [adorno1, adorno2, adorno3]
-
-// caracteristicas para elección de productos
-const editarProductoSeleccionado = (adornoSeleccionado) => {
-    const productoElegido = {
-        id: adornoSeleccionado.id,
-        modelo: adornoSeleccionado.modelo,
-        tamaños: '0',
-        color: '',
-        cantidad: 1,
-        precio: adornoSeleccionado.precio,
-    }
-
-    productoElegido.tamaños = Number (prompt('Elija Tamaños, tenemos los siguientes en stock: ' + adornoSeleccionado.tamaños.join('-')))
-    productoElegido.color = prompt('Elija Color, tenemos los siguientes en stock: ' + adornoSeleccionado.colores.join('-')).toLowerCase()
-    productoElegido.cantidad = Number(prompt('Cuantas unidades quiere sumar al carrito?'))
-
-    return productoElegido
-}
-
-
-// Solicitarle al usuario que elija que producto quiere comprar
-const seleccionarProducto = () => {
-    const seleccionUsuario = prompt('Elegi el modelo de decoración que quieras comprar entre: Arco Iris, Espejos, Llaveros').toLowerCase()
-
-    switch (seleccionUsuario) {
-        case 'arco iris':
-            console.log('Elegiste Arco Iris')
-            carrito.push(editarProductoSeleccionado(adorno1))
-            break
-        case 'espejos':
-            console.log('Elegiste Espejos')
-            carrito.push(editarProductoSeleccionado(adorno2))
-            break
-        case 'llaveros':
-            console.log('Llaveros')
-            carrito.push(editarProductoSeleccionado(adorno3))
-            break
-        default:
-            console.log('Por favor, elegi un modelo correcto')
-            alert('Por favor, elegi un modelo correcto')
-            break
-    }
-
-    if (confirm('Desea agregar otro producto a su compra?')) {
-        seleccionarProducto()
-    }
-}
-
-
-// Suma total de mis productos
-const sumarTotalCarrito = () => {
-    let sumaTotalCarrito = 0
-    for (const producto of carrito) {
-        sumaTotalCarrito += producto.precio * producto.cantidad
-    }
-    return sumaTotalCarrito
-}
-
-
-// Ejecuciones
-seleccionarProducto()
-
-alert('Gracias por su compra, su total es de $' + sumarTotalCarrito())
-console.log('Gracias por su compra, su total es de $' + sumarTotalCarrito())
-
-
-/*
-
-
-
-// ARRAYS-MÉTODOS
-/*
- let productos = ["Arco Iris",
-                  "Llaveros",
-                    "Espejos",
-                     "Animales"] ;
- 
-                     alert(productos); 
- let resultado = productos.push ("Lámparas");   
-                     alert(productos);               
- 
-
-
-//CICLOS
-for (let i = 001; i <= 005; i++) {
-    let nombreIngresado = prompt("Ingresar nombre completo:");
-    alert("Usuario  N° "+i+" Nombre: "+nombreIngresado);
-}
-//FUNCIONES - VARIABLES
-
-    function sumar(numero1, numero2)
-     {
-         return numero1 + numero2
-     }
-    
-     {  let numero1 = 3500;
-        let numero2 = 170;
-        let resultado = sumar(numero1, numero2);
-         alert("Valor producto (Incluye IVA) $" + (resultado));
-     }
-    
-//CONDICIONALES - VARIABLES
-   { var nombre, edad;
-    nombre = prompt ('Por favor introduce tu nombre completo:');
-    if (nombre =="") { alert ('No has introducido ningún nombre.'); }
-    else { alert ('Hola '+nombre + '. Bienvenido/a a nuestra Tienda, que te diviertas.'); }
-    edad = prompt ('¿Que edad tienes?');
-    edad = Number(edad);
-    if (edad >=1 && edad < 18) {alert ('Eres menor de edad, deberás ser supervisado/a por un adulto.');}
-    else if (edad >=18 && edad <=100) {alert ('Fuiste registrado/a con éxito.');}
-    else {alert ('No has introducido un valor válido de edad. ( '+edad+')');}
-    }
-    
-*/
-    
-
-    
-
-
-
-    
-
-     
