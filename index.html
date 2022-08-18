@@ -48,8 +48,8 @@
                   </li>
                 </ul>
                 <form class="d-flex" role="search">
-                  <input class="form-control me-2" type="text" name="search" id="search">
-                  <button class="btn btn-outline-success" type="submit">Buscar</button>
+                  <input class="form-control me-2" type="text" name="searchBar" id="searchBar">
+                  <button class="btn btn-outline-success searchButton" id="searchButton" type="submit">Buscar</button>
                 </form>
               </div>
             </div>
@@ -59,14 +59,18 @@
 
         <h1 class="titulo"> ACA Tá TIENDA </h1>
         
+      <div
+        id="cardContainer" class="cardContainer" >
+         </div>
 
-        <div class="container">
-          <div class="row">
+
+        <div>
+          <div>
               <!-- Elementos generados a partir del JSON -->
-              <main id="items" class="col-sm-8 row"></main>
+              <main id="productoSeleccionado" class="col-sm-8 row"></main>
               <!-- Carrito -->
               <aside class="col-sm-4">
-                  <h2>Carrito</h2>
+                  <h2>Tus compras</h2>
                   <!-- Elementos del carrito -->
                   <ul id="carrito" class="list-group"></ul>
                   <hr>

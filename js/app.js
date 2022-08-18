@@ -1,167 +1,136 @@
-const adornos  = [
-    {
-        id: 1,
-        nombre: 'Arco Iris',
-        precio: 3500,
-        imagen: './img/arcoiris.jpeg'
-    },
-    {
-        id: 2,
-        nombre: 'Espejos',
-        precio: 5500,
-        imagen: './img/espejo.jpeg'
-    },
-    {
-        id: 3,
-        nombre: 'Llaveros',
-        precio: 2500,
-        imagen: './img/llavero.jpeg'
-    },
-    
+// Declaraciones
 
-];
 
+// Array de todos los Productos(que estan en data.js)
+const producto = [adorno1, adorno2, adorno3]
+// Compras
 let carrito = [];
-const divisa = '$';
-const DOMitems = document.querySelector('#items');
-const DOMcarrito = document.querySelector('#carrito');
-const DOMtotal = document.querySelector('#total');
-const DOMbotonVaciar = document.querySelector('#boton-vaciar');
+// Selectores
+const productoSeleccionado = document.querySelector('#productoSeleccionado');
+const carritoo = document.querySelector('#carrito');
+const total = document.querySelector('#total');
+const botonVaciar = document.querySelector('#boton-vaciar');
 const miLocalStorage = window.localStorage;
 
 // Funciones
 
-/**
-* Dibuja todos los productos a partir de la base de datos. No confundir con el carrito
-*/
-function renderizarProductos() {
-    adornos.forEach((info) => {
-        // Estructura
-        const miNodo = document.createElement('div');
-        miNodo.classList.add('card', 'col-sm-4');
-        // Body
-        const miNodoCardBody = document.createElement('div');
-        miNodoCardBody.classList.add('card-body');
-        // Titulo
-        const miNodoTitle = document.createElement('h5');
-        miNodoTitle.classList.add('card-title');
-        miNodoTitle.textContent = info.nombre;
-        // Imagen
-        const miNodoImagen = document.createElement('img');
-        miNodoImagen.classList.add('img-fluid');
-        miNodoImagen.setAttribute('src', info.imagen);
-        // Precio
-        const miNodoPrecio = document.createElement('p');
-        miNodoPrecio.classList.add('card-text');
-        miNodoPrecio.textContent = `$${info.precio}`;
-        // Boton 
-        const miNodoBoton = document.createElement('button');
-        miNodoBoton.classList.add('btn', 'btn-primary');
-        miNodoBoton.textContent = 'Agregar al carrito';
-        miNodoBoton.setAttribute('marcador', info.id);
-        miNodoBoton.addEventListener('click', agregarProductoAlCarrito);
-        // Insertamos
-        miNodoCardBody.appendChild(miNodoImagen);
-        miNodoCardBody.appendChild(miNodoTitle);
-        miNodoCardBody.appendChild(miNodoPrecio);
-        miNodoCardBody.appendChild(miNodoBoton);
-        miNodo.appendChild(miNodoCardBody);
-        DOMitems.appendChild(miNodo);
+const cardContainer = document.querySelector('#cardContainer')
+const cardProducto = document.querySelectorAll ('.card')
+
+
+//Dibuja todos los productos a partir del array
+
+function renderizarProducto() {
+    producto.forEach((adornos) => {
+        const cardProducto = document.createElement('div');
+        cardProducto.className = 'card' 
+        cardProducto.setAttribute('data-id', adornos.id)
+        cardProducto.innerHTML = 
+       `<h3 class="cardTitulo"> ${adornos.modelo} </h3>
+        <center><img ${adornos.imagen} class="cardImg"></center>
+        <p class="cardDescri"> ${adornos.medidas}</p>
+        <span class="cardPrecio"> $${adornos.precio} </span>`
+
+ // Boton Agregar Carrito (función)
+        const cardBoton = document.createElement('div');
+        cardBoton.classList.add('card-body');
+        
+        const Boton = document.createElement('button');
+        Boton.classList.add('btn', 'agregarCarrito');
+        Boton.textContent = 'Agregar al carrito';
+        Boton.setAttribute('push', adornos.id);
+        Boton.addEventListener('click', agregarProductoAlCarrito);
+        
+        
+         cardBoton.append(Boton);
+        cardProducto.append(cardBoton);
+        productoSeleccionado.append(cardProducto);
+        cardContainer.append(cardProducto)
+
     });
 }
 
-/**
-* Evento para añadir un producto al carrito de la compra
-*/
+
+//añadir un producto al carrito
+
 function agregarProductoAlCarrito(evento) {
-    // Anyadimos el Nodo a nuestro carrito
-    carrito.push(evento.target.getAttribute('marcador'))
-    // Actualizamos el carrito 
+    carrito.push(evento.target.getAttribute('push'))
     renderizarCarrito();
-    // Actualizamos el LocalStorage
     guardarCarritoEnLocalStorage();
 }
 
-/**baseDeDatos
-* Dibuja todos los productos guardados en el carrito
-*/
+
+// productos guardados en el carrito
+
 function renderizarCarrito() {
-    // Vaciamos todo el html
-    DOMcarrito.textContent = '';
-    // Quitamos los duplicados
+    carritoo.textContent = '';
     const carritoSinDuplicados = [...new Set(carrito)];
-    // Generamos los Nodos a partir de carrito
-    carritoSinDuplicados.forEach((item) => {
-        // Obtenemos el item que necesitamos de la variable base de datos
-        const miItem = adornos.filter((itemBaseDatos) => {
-            // ¿Coincide las id? Solo puede existir un caso
-            return itemBaseDatos.id === parseInt(item);
+    carritoSinDuplicados.forEach((unidad) => {
+        const miProducto = producto.filter((unidadInfo) => {
+            return unidadInfo.id === parseInt(unidad);
         });
-        // Cuenta el número de veces que se repite el producto
-        const numeroUnidadesItem = carrito.reduce((total, itemId) => {
-            // ¿Coincide las id? Incremento el contador, en caso contrario no mantengo
-            return itemId === item ? total += 1 : total;
+    
+        const numeroProductos = carrito.reduce((total, unidadId) => {
+// contador de productos
+            return unidadId === unidad ? total += 1 : total;
         }, 0);
-        // Creamos el nodo del item del carrito
-        const miNodo = document.createElement('li');
-        miNodo.classList.add('list-group-item', 'text-right', 'mx-2');
-        miNodo.textContent = `${numeroUnidadesItem} x ${miItem[0].nombre} - $${miItem[0].precio}`;
-        // Boton de borrar
+
+// nodo del carrito (lo seleccionado)
+        const cardProducto = document.createElement('li');
+        cardProducto.classList.add('list-group-item', 'text-right', 'mx-2');
+        cardProducto.textContent = `${numeroProductos} x ${miProducto[0].modelo} - $${miProducto[0].precio}`;
+// Boton de borrar
         const miBoton = document.createElement('button');
         miBoton.classList.add('btn', 'btn-danger', 'mx-5');
-        miBoton.textContent = 'X';
-        miBoton.style.marginLeft = '1rem';
-        miBoton.dataset.item = item;
+        miBoton.textContent = 'Eliminar compra';
+        miBoton.dataset.unidad = unidad;
         miBoton.addEventListener('click', borrarCarrito);
-        // Mezclamos nodos
-        miNodo.appendChild(miBoton);
-        DOMcarrito.appendChild(miNodo);
+// Mezcla de nodos
+        cardProducto.append(miBoton);
+        carritoo.append(cardProducto);
     });
-    // Renderizamos el precio total en el HTML
-    DOMtotal.textContent = calcularTotal();
+// precio total
+    total.textContent = calcularTotal();
 }
 
 
-//Evento para borrar un elemento del carrito
+//borrar un elemento del carrito
 
 function borrarCarrito(evento) {
-    // Obtenemos el producto ID que hay en el boton pulsado
-    const id = evento.target.dataset.item;
-    // Borramos todos los productos
-    carrito = carrito.filter((carritoId) => {
-        return carritoId !== id;
+    const id = evento.target.dataset.unidad;
+    carrito = carrito.filter((carritoSelec) => {
+        return carritoSelec !== id;
     });
-    // volvemos a renderizar
+    
     renderizarCarrito();
-    // Actualizamos el LocalStorage
     guardarCarritoEnLocalStorage();
 
 }
 
-/**
- * Calcula el precio total teniendo en cuenta los productos repetidos
- */
+
+ //Calculo dd precio total teniendo en cuenta los productos repetidos
+ 
 function calcularTotal() {
-    // Recorremos el array del carrito 
-    return carrito.reduce((total, item) => {
-        // De cada elemento obtenemos su precio
-        const miItem = adornos.filter((itemBaseDatos) => {
-            return itemBaseDatos.id === parseInt(item);
+//array del carrito 
+    return carrito.reduce((total, unidad) => {
+// De cada elemento se obtiene su precio
+        const miProducto = producto.filter((adornosInfo) => {
+            return adornosInfo.id === parseInt(unidad);
         });
-        // Los sumamos al total
-        return total + miItem[0].precio;
+// suma al total
+        return total + miProducto[0].precio;
     }, 0).toFixed(2);
 }
 
-/**
-* Varia el carrito y vuelve a dibujarlo
-*/
+
+// Vacio el carrito y vuelve a imprimir
+
 function vaciarCarrito() {
-    // Limpiamos los productos guardados
+// Limpieza de productos guardados
     carrito = [];
-    // Renderizamos los cambios
+// Renderiza los cambios
     renderizarCarrito();
-    // Borra LocalStorage
+// Borrar LocalStorage
     localStorage.clear();
 
 }
@@ -171,19 +140,19 @@ function guardarCarritoEnLocalStorage () {
 }
 
 function cargarCarritoDeLocalStorage () {
-    // ¿Existe un carrito previo guardado en LocalStorage?
+// guardado de LocalStorage
     if (miLocalStorage.getItem('carrito') !== null) {
-        // Carga la información
+// Carga de info
         carrito = JSON.parse(miLocalStorage.getItem('carrito'));
     }
 }
 
 // Eventos
-DOMbotonVaciar.addEventListener('click', vaciarCarrito);
+botonVaciar.addEventListener('click', vaciarCarrito);
 
 // Inicio
 cargarCarritoDeLocalStorage();
-renderizarProductos();
+renderizarProducto();
 renderizarCarrito();
 
 
@@ -199,15 +168,18 @@ renderizarCarrito();
 
 
 // BUSCADOR
+const searchBar = document.querySelector('#searchBar')
+const searchButton = document.querySelector('#searchButton')
 
-const searchBar = document.querySelector('#search')
+
 
 const search = () => {
     const query = searchBar.value
-    const searchResult = productos.filter((producto) => producto.modelo.toLowerCase().includes(query))
-    console.log(searchResult);
-    // y si en ves de mostrarlo por consola imprimimos los productos dentro de searchResult??
+    const arrayResultados = producto.filter((producto) => producto.modelo.toLowerCase().includes(query))
+    
+    renderizarProducto(arrayResultados)
 }
-
+searchButton.addEventListener('click', search)
 searchBar.addEventListener('input', search)
+
 

@@ -157,12 +157,11 @@
   padding: 10px 15px;
   border: none;
   border-radius: 10px;
-  cursor: pointer;
 }
 
 .agregarCarrito:hover {
   background-color: rgb(119, 217, 112);
-  box-shadow: 1px 1px 10px lightgrey;
+  box-shadow: 1px 1px 10px rgb(98, 248, 148);
 }
 
 
