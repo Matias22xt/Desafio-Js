@@ -1,10 +1,10 @@
 // Declaraciones
 
+let carrito =  []
 
 // Array de todos los Productos(que estan en data.js)
 const producto = [adorno1, adorno2, adorno3]
-// Compras
-let carrito = [];
+
 // Selectores
 const productoSeleccionado = document.querySelector('#productoSeleccionado');
 const carritoo = document.querySelector('#carrito');
@@ -72,7 +72,7 @@ function renderizarCarrito() {
     
         const numeroProductos = carrito.reduce((total, unidadId) => {
 // contador de productos
-            return unidadId === unidad ? total += 1 : total;
+            return unidadId === unidad ? total + 1 : total;
         }, 0);
 
 // nodo del carrito (lo seleccionado)
@@ -140,11 +140,9 @@ function guardarCarritoEnLocalStorage () {
 }
 
 function cargarCarritoDeLocalStorage () {
-// guardado de LocalStorage
-    if (miLocalStorage.getItem('carrito') !== null) {
-// Carga de info
-        carrito = JSON.parse(miLocalStorage.getItem('carrito'));
-    }
+
+    // Carga de info al carrito, guardado de LocalStorage (optimizado) + compras
+ carrito = JSON.parse(miLocalStorage.getItem('carrito')) || []
 }
 
 // Eventos
