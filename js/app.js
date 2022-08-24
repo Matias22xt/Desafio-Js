@@ -147,19 +147,59 @@ function cargarCarritoDeLocalStorage () {
 
 // Eventos
 botonVaciar.addEventListener('click', vaciarCarrito);
+//Libreria sweetAlert
+document.querySelector('#comprar').addEventListener('click', () => {
+    swal.fire(
+        'Gracias por tu compra!',
+        'Aca Tá Tienda',
+        'success'
+      );
+})
 
 // Inicio
 cargarCarritoDeLocalStorage();
 renderizarProducto();
 renderizarCarrito();
 
+document.querySelector('#boton-vaciar').addEventListener('click', () => {
+Toastify({
+    text: "Carrito vacio",
+    duration: 2000,
+    destination: "",
+    newWindow: true,
+    close: true,
+    gravity: "top", // `top` or `bottom`
+    position: "left", // `left`, `center` or `right`
+    stopOnFocus: true, // Prevents dismissing of toast on hover
+    style: {
+      background: "linear-gradient(to right, #FFB2A6, #FFF89A)",
+    },
+    onClick: function(){} // Callback after click
+  }).showToast();
 
 
 
+ })
 
-
-
-
+ document.querySelector('#1').addEventListener('click', () => {
+    Toastify({
+        text: "Carrito vacio",
+        duration: 2000,
+        destination: "",
+        newWindow: true,
+        close: true,
+        gravity: "top", // `top` or `bottom`
+        position: "left", // `left`, `center` or `right`
+        stopOnFocus: true, // Prevents dismissing of toast on hover
+        style: {
+          background: "linear-gradient(to right, #FFB2A6, #FFF89A)",
+        },
+        onClick: function(){} // Callback after click
+      }).showToast();
+    
+    
+    
+     })
 
 
 
