@@ -40,6 +40,13 @@ function renderizarProducto() {
         Boton.textContent = 'Agregar al carrito';
         Boton.setAttribute('push', adornos.id);
         Boton.addEventListener('click', agregarProductoAlCarrito);
+//Libreria sweetAlert
+        Boton.addEventListener('click', () => {
+            Swal.fire(
+                'Producto seleccionado'
+
+              );
+        })
         
         
          cardBoton.append(Boton);
@@ -85,6 +92,17 @@ function renderizarCarrito() {
         miBoton.textContent = 'Eliminar compra';
         miBoton.dataset.unidad = unidad;
         miBoton.addEventListener('click', borrarCarrito);
+//Libreria sweetAlert
+        miBoton.addEventListener('click', () => {
+            Swal.fire(
+                'Eliminar producto?',
+                'Puedes volver a comprarlo en nuestra Tienda',
+                'question'
+
+              );
+        })
+
+
 // Mezcla de nodos
         cardProducto.append(miBoton);
         carritoo.append(cardProducto);
@@ -123,8 +141,26 @@ function calcularTotal() {
 }
 
 
-// Vacio el carrito y vuelve a imprimir
-
+// Vacio el carrito y vuelve a imprimir //Libreria sweetAlert
+document.querySelector('#boton-vaciar').addEventListener('click', () => {
+    Swal.fire({
+        title: 'Quieres vaciar tu carrito?',
+        text: "perderás tus productos!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Si!'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          Swal.fire(
+            'Carrito vacio!',
+            'Vuelve pronto.',
+            'success'
+          )
+        }
+      })
+       })
 function vaciarCarrito() {
 // Limpieza de productos guardados
     carrito = [];
@@ -161,47 +197,9 @@ cargarCarritoDeLocalStorage();
 renderizarProducto();
 renderizarCarrito();
 
-document.querySelector('#boton-vaciar').addEventListener('click', () => {
-Toastify({
-    text: "Carrito vacio",
-    duration: 2000,
-    destination: "",
-    newWindow: true,
-    close: true,
-    gravity: "top", // `top` or `bottom`
-    position: "left", // `left`, `center` or `right`
-    stopOnFocus: true, // Prevents dismissing of toast on hover
-    style: {
-      background: "linear-gradient(to right, #FFB2A6, #FFF89A)",
-    },
-    onClick: function(){} // Callback after click
-  }).showToast();
 
 
-
- })
-
- document.querySelector('#1').addEventListener('click', () => {
-    Toastify({
-        text: "Carrito vacio",
-        duration: 2000,
-        destination: "",
-        newWindow: true,
-        close: true,
-        gravity: "top", // `top` or `bottom`
-        position: "left", // `left`, `center` or `right`
-        stopOnFocus: true, // Prevents dismissing of toast on hover
-        style: {
-          background: "linear-gradient(to right, #FFB2A6, #FFF89A)",
-        },
-        onClick: function(){} // Callback after click
-      }).showToast();
-    
-    
-    
-     })
-
-
+ 
 
 
 
