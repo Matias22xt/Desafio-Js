@@ -3,7 +3,7 @@
 let carrito =  []
 
 // Array de todos los Productos(que estan en data.js)
-const producto = [adorno1, adorno2, adorno3]
+let producto = []
 
 // Selectores
 const productoSeleccionado = document.querySelector('#productoSeleccionado');
@@ -192,15 +192,26 @@ document.querySelector('#comprar').addEventListener('click', () => {
       );
 })
 
-// Inicio
-cargarCarritoDeLocalStorage();
-renderizarProducto();
-renderizarCarrito();
+
+
+
 
 
 
  
+//Fetch
+const getProducto = async () => {
+        const response = await fetch('../data/productos.json')
+        const data = await response.json()
+        producto = data
+        renderizarProducto(producto)
+        renderizarCarrito()
+    
 
+}
+// Inicio
+cargarCarritoDeLocalStorage();
+getProducto()
 
 
 // BUSCADOR
@@ -210,12 +221,11 @@ const searchButton = document.querySelector('#searchButton')
 
 
 const search = () => {
-    const query = searchBar.value
-    const arrayResultados = producto.filter((producto) => producto.modelo.toLowerCase().includes(query))
+    const query = searchBar.value.toLowerCase() 
+    const arrayResultados = producto.filter((adornos) => adornos.modelo.toLowerCase().includes(query))
     
     renderizarProducto(arrayResultados)
 }
 searchButton.addEventListener('click', search)
 searchBar.addEventListener('input', search)
-
 
