@@ -191,11 +191,12 @@ document.querySelector('#comprar').addEventListener('click', () => {
         'success'
       );
 })
-
+// Inicio
+cargarCarritoDeLocalStorage();
 
 //Fetch
-const getProducto = async () => {
-        const response = await fetch('../data/productos.json')
+/*const getProducto = async () => {
+        const response = await fetch('../json/productos.json')
         const data = await response.json()
         producto = data
         renderizarProducto(producto)
@@ -204,9 +205,17 @@ const getProducto = async () => {
 
 
 }
-// Inicio
-cargarCarritoDeLocalStorage();
-getProducto()
+*/
+fetch('../json/productos.json')
+.then((response) => response.json())
+.then((data)=> {
+    producto = data
+    renderizarProducto(producto)
+    renderizarCarrito()
+} )
+
+
+// getProducto()
 
 
 // BUSCADOR
