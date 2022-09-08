@@ -10,6 +10,7 @@ const productoSeleccionado = document.querySelector('#productoSeleccionado');
 const carritoo = document.querySelector('#carrito');
 const total = document.querySelector('#total');
 const botonVaciar = document.querySelector('#boton-vaciar');
+const botonComprar = document.querySelector('#comprar');
 const miLocalStorage = window.localStorage;
 
 // Funciones
@@ -143,24 +144,14 @@ function calcularTotal() {
 
 // Vacio el carrito y vuelve a imprimir //Libreria sweetAlert
 document.querySelector('#boton-vaciar').addEventListener('click', () => {
-    Swal.fire({
-        title: 'Quieres vaciar tu carrito?',
-        text: "perderás tus productos!",
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Si!'
-      }).then((result) => {
-        if (result.isConfirmed) {
-          Swal.fire(
+   Swal.fire(
             'Carrito vacio!',
             'Vuelve pronto.',
             'success'
           )
         }
-      })
-       })
+      )
+
 function vaciarCarrito() {
 // Limpieza de productos guardados
     carrito = [];
@@ -182,6 +173,7 @@ function cargarCarritoDeLocalStorage () {
 }
 
 // Eventos
+botonComprar.addEventListener('click', vaciarCarrito);
 botonVaciar.addEventListener('click', vaciarCarrito);
 //Libreria sweetAlert
 document.querySelector('#comprar').addEventListener('click', () => {
@@ -194,18 +186,6 @@ document.querySelector('#comprar').addEventListener('click', () => {
 // Inicio
 cargarCarritoDeLocalStorage();
 
-//Fetch
-/*const getProducto = async () => {
-        const response = await fetch('../json/productos.json')
-        const data = await response.json()
-        producto = data
-        renderizarProducto(producto)
-        renderizarCarrito()
-    
-
-
-}
-*/
 fetch('../json/productos.json')
 .then((response) => response.json())
 .then((data)=> {
@@ -214,20 +194,12 @@ fetch('../json/productos.json')
     renderizarCarrito()
 } )
 
-
-// getProducto()
-
-
 // BUSCADOR
 const searchBar = document.querySelector('#searchBar')
 const searchButton = document.querySelector('#searchButton')
-
-
-
 const search = () => {
     const query = searchBar.value.toLowerCase() 
     const arrayResultados = producto.filter((adornos) => adornos.modelo.toLowerCase().includes(query))
-    
     renderizarProducto(arrayResultados)
 }
 searchButton.addEventListener('click', search)

@@ -90,19 +90,15 @@
   padding-top: 50px;
   display: grid;
   grid-template-areas: 
-  "btn titulo titulo"
-  "cardContainer cardContainer cardContainer"
-  "boton boton boton";
+  "titulo titulo titulo"
+  "cardContainer cardContainer cardContainer";
 
     
 }
 
-.btn{
-  grid-area: btn;
-  margin: 10px 0;
-  border-radius: 10px;
+.cardDescri {
+  text-align: center;
 }
-
 .titulo{
   grid-area: titulo;
   font-family: 'Amatic SC', cursive;
@@ -120,6 +116,13 @@
   width: 100%;
   grid-area: cardContainer;
 }
+.cardContainer1 {
+  text-align: center;
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  grid-area: cardContainer;
+}
 
 .card {
   background-color: rgb(255, 253, 190);
@@ -128,10 +131,22 @@
   border: 1px ;
   border-radius: 20px;
   
+  }
+
+.card1 {
+  text-align: center;
+  background-color: rgb(255, 253, 190);
+  width: 45%;
+  padding: 20px 10px;
+  border: 1px ;
+  border-radius: 20px;
+  
   
   
 }
-
+.titulo1{
+  text-align: center;
+}
 
 .cardImg {
   width: 80%;
@@ -140,16 +155,19 @@
 .imgCard{
   text-align: center;
   }
-
+.cardTitulo{
+  text-align: center;
+}
 .cardPrecio {
+  text-align: center;
   display: block;
   font-size: 30px;
   font-weight: 600;
   margin-bottom: 10px;
 }
 
-.agregarCarrito {
-  margin: 10px 0;
+/*.agregarCarrito {
+  margin-left: 17%;
   background-color: rgb(186, 255, 180);
   color: black;
   font-size: 20px;
@@ -162,10 +180,43 @@
 .agregarCarrito:hover {
   background-color: rgb(119, 217, 112);
   box-shadow: 1px 1px 10px rgb(98, 248, 148);
+}*/
+
+
+/* From uiverse.io */
+.agregarCarrito {
+  padding: 1.3em 3em;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 2.5px;
+  font-weight: 500;
+  color: #000;
+  background-color: rgb(97, 226, 129);
+  border: none;
+  border-radius: 45px;
+  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease 0s;
+  cursor: pointer;
+  outline: none;
+}
+
+.agregarCarrito:hover {
+  background-color: #23c483;
+  box-shadow: 0px 15px 20px rgba(46, 229, 157, 0.4);
+  color: #fff;
+  transform: translateY(-7px);
+}
+
+.agregarCarrito:active {
+  transform: translateY(-1px);
 }
 
 
-/* From uiverse.io by @alexmaracinaru */
+
+
+
+
+
 .cta {
   border: none;
   background: none;
