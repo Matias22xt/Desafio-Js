@@ -30,20 +30,13 @@
                   <li class="nav-item">
                     <a class="nav-link active" aria-current="page" href="#">Bienvenidos</a>
                   </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="./Aca Tá Tienda/productos.html">Productos</a>
-                  </li>
-                  <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                      Màs
-                    </a>
+                   <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Màs</a>
                     <ul class="dropdown-menu">
                       <li><a class="dropdown-item" href="./Aca Tá Tienda/contacto.html">Contacto</a></li>
                       <li><hr class="dropdown-divider"></li>
                       <li><a class="dropdown-item" href="./Aca Tá Tienda/sobremi.html">Sobre Mi</a></li>
-                     
-                     
-                    </ul>
+                     </ul>
                   </li>
                   <li class="nav-item">
                     <a class="nav-link disabled"><img class="imgarcoiris" src="./img/arcoiris1.png" alt=""></a>
@@ -62,24 +55,25 @@
       <div
         id="cardContainer" class="cardContainer" >
      </div>
-     <div>
-          <div class="cardContainer1">
+     <div class="cardContainer1">
+          <div>
               <!-- Elementos generados a partir del JSON -->
               <main id="productoSeleccionado" class=""></main>
               <!-- Carrito -->
               <aside class="text-center">
-                  <h2>Tus compras</h2>
+                  <h2 class="compras">Tus compras <img class="carritoimg" src="./img/carrito-de-compras.png" alt=""></h2>
                   <!-- Productos del carrito -->
                   <ul id="carrito" class="list-group"></ul>
-                  <hr>
-                  <!-- Precio total -->
-                  <p class="text-right">Total:$<span id="total"></span></p>
-                  <button id="boton-vaciar" class="btn btn-danger">Vaciar</button>
-                  <button id="comprar" class="btn btn-danger">Comprar</button>
+                  
+                  <!-- total de la compra -->
+                  
+                  <p class="seleccionado">Total:$<span id="total"></span></p>
+                  <button id="boton-vaciar" class="btn2">Vaciar</button>
+                  <button id="comprar" class="btn3">Comprar</button>
                   
               </aside>
           </div>
-      </div>
+      </div> 
    </main>
   
    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>

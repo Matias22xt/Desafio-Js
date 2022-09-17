@@ -82,8 +82,14 @@
 .imgarcoiris{
   width: 27px;
 }
-
-
+.carritoimg{
+  width: 50px;
+}
+.compras{
+  font-size: 40px;
+  font-style: italic;
+  text-decoration: underline;
+}
 .conteiner-main{
   font-family: Arial;
   text-align: center;
@@ -91,8 +97,8 @@
   display: grid;
   grid-template-areas: 
   "titulo titulo titulo"
-  "cardContainer cardContainer cardContainer";
-
+  "cardContainer cardContainer cardContainer"
+"cardContainer1 cardContainer1 cardContainer1";
     
 }
 
@@ -104,12 +110,7 @@
   font-family: 'Amatic SC', cursive;
   font-family: 'Dancing Script', cursive;
   font-size: 60px;
-
-
-
 }
-
-
 .cardContainer {
   display: flex;
   justify-content: space-around;
@@ -121,9 +122,8 @@
   display: flex;
   justify-content: space-around;
   width: 100%;
-  grid-area: cardContainer;
+  grid-area: cardContainer1;
 }
-
 .card {
   background-color: rgb(255, 253, 190);
   width: 25%;
@@ -132,7 +132,6 @@
   border-radius: 20px;
   
   }
-
 .card1 {
   text-align: center;
   background-color: rgb(255, 253, 190);
@@ -140,18 +139,13 @@
   padding: 20px 10px;
   border: 1px ;
   border-radius: 20px;
-  
-  
-  
-}
+  }
 .titulo1{
   text-align: center;
 }
-
 .cardImg {
   width: 80%;
-  
- }
+   }
 .imgCard{
   text-align: center;
   }
@@ -165,25 +159,10 @@
   font-weight: 600;
   margin-bottom: 10px;
 }
-
-/*.agregarCarrito {
-  margin-left: 17%;
-  background-color: rgb(186, 255, 180);
-  color: black;
-  font-size: 20px;
-  font-weight: 500;
-  padding: 10px 15px;
-  border: none;
-  border-radius: 10px;
+.seleccionado{
+  font-size: 30px;
 }
-
-.agregarCarrito:hover {
-  background-color: rgb(119, 217, 112);
-  box-shadow: 1px 1px 10px rgb(98, 248, 148);
-}*/
-
-
-/* From uiverse.io */
+/* efecto carrito */
 .agregarCarrito {
   padding: 1.3em 3em;
   font-size: 12px;
@@ -206,63 +185,94 @@
   color: #fff;
   transform: translateY(-7px);
 }
-
 .agregarCarrito:active {
   transform: translateY(-1px);
 }
 
-
-
-
-
-
-
-.cta {
-  border: none;
-  background: none;
- }
- 
- .cta span {
-  padding-bottom: 7px;
-  letter-spacing: 4px;
-  font-size: 10px;
-  padding-right: 15px;
-  text-transform: uppercase;
- }
- 
- .cta svg {
-  transform: translateX(-8px);
-  transition: all 0.3s ease;
- }
- 
- .cta:hover svg {
-  transform: translateX(0);
- }
- 
- .cta:active svg {
-  transform: scale(0.9);
- }
- 
- .hover-underline-animation {
+/* efecto2 */
+.btn2 {
   position: relative;
+  font-size: 13px;
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: 1em 2.5em;
+  display: inline-block;
+  border-radius: 6em;
+  transition: all .2s;
+  border: none;
+  font-family: inherit;
+  font-weight: 500;
   color: black;
-  padding-bottom: 20px;
+  background-color: rgb(241, 193, 193);
  }
- 
- .hover-underline-animation:after {
+ .btn2:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 20px rgba(163, 26, 26, 0.9);
+ }
+ .btn2:active {
+  transform: translateY(-1px);
+  box-shadow: 0 5px 10px rgba(192, 20, 20, 0.9);
+ }
+ .btn2::after {
   content: "";
-  position: absolute;
+  display: inline-block;
+  height: 100%;
   width: 100%;
-  transform: scaleX(0);
-  height: 1.5px;
-  bottom: 0;
+  border-radius: 100px;
+  position: absolute;
+  top: 0;
   left: 0;
-  background-color: #000000;
-  transform-origin: bottom right;
-  transition: transform 0.25s ease-out;
+  z-index: -1;
+  transition: all .9s;
  }
- 
- .cta:hover .hover-underline-animation:after {
-  transform: scaleX(1);
-  transform-origin: bottom left;
+ .btn2::after {
+  background-color: rgb(187, 20, 20);
+ }
+ .btn2:hover::after {
+  transform: scaleX(1.4) scaleY(1.6);
+  opacity: 0;
+ }
+
+ /* Efecto3 */
+.btn3 {
+  position: relative;
+  font-size: 13px;
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: 1em 2.5em;
+  display: inline-block;
+  border-radius: 6em;
+  transition: all .2s;
+  border: none;
+  font-family: inherit;
+  font-weight: 500;
+  color: black;
+  background-color: rgb(114, 243, 109);
+ }
+ .btn3:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 20px rgba(41, 184, 65, 0.9);
+ }
+ .btn3:active {
+  transform: translateY(-1px);
+  box-shadow: 0 5px 10px rgba(41, 184, 65, 0.9);
+ }
+ .btn3::after {
+  content: "";
+  display: inline-block;
+  height: 100%;
+  width: 100%;
+  border-radius: 100px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  transition: all .9s;
+ }
+ .btn3::after {
+  background-color: rgb(30, 131, 64);
+ }
+ .btn3:hover::after {
+  transform: scaleX(1.4) scaleY(1.6);
+  opacity: 0;
  }
