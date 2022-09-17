@@ -168,11 +168,3 @@ fetch('../json/productos.json')
     renderizarProducto(producto)
     renderizarCarrito()
 } )
-// BUSCADOR
-const search = () => {
-    const query = searchBar.value.toLowerCase() 
-    const arrayResultados = producto.filter((adornos) => adornos.modelo.toLowerCase().includes(query))
-    renderizarProducto(arrayResultados)
-}
-searchButton.addEventListener('click', search)
-searchBar.addEventListener('input', search)
